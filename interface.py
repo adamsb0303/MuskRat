@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
-from PIL import ImageTk, Image 
+from tkinter import filedialog
+from PIL import ImageTk, Image
+from matplotlib.ft2font import HORIZONTAL 
 
 
 class App(tk.Tk):
@@ -33,11 +35,22 @@ class App(tk.Tk):
         title_font = ("Oswald", 20, "bold")
         title_label.configure(font = title_font)
         
+        #filepath label
+        filepath_label = ttk.Label(self, text="")
+        filepath_label.grid(column=1, row=2, sticky=tk.W, padx=5, pady=5)
+            
+        #open file prompt and take selected file
+        def upload_action(event=None):
+            filename = filedialog.askopenfilename()
+            filepath_label.config(text = filename)
+        
+        #file upload
+        upload_file = ttk.Button(self, text='File Upload', command=upload_action)
+        upload_file.grid(column=1, row=1, sticky=tk.W, padx=5, pady=5)
+        
         #model output
         model1_label = ttk.Label(self, text = "Model Result: ")
         model1_label.grid(column=0, row=1, sticky=tk.W, padx=5, pady=5)
-        
-
 
 if __name__ == "__main__":
     app = App()
