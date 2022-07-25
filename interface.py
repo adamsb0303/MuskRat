@@ -47,7 +47,6 @@ class App(tk.Tk):
         def upload_action(event=None):
             filename = filedialog.askopenfilename()
             filepath_label.config(text = filename)
-
             #tells the backend the path to the input file 
             #returns a list of predictions (real/fake) in the following order 
             #[model1, model2, model3, model4, model5, most_frequent_prediction_out_of_all_5_models]
