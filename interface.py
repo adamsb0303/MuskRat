@@ -1,9 +1,13 @@
+import back as bck
+from tkinter import *
+import matplotlib.pyplot as plt
+import cv2
+
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
 from PIL import ImageTk, Image
 from matplotlib.ft2font import HORIZONTAL 
-
 
 class App(tk.Tk):
     def __init__(self):
@@ -43,8 +47,15 @@ class App(tk.Tk):
         def upload_action(event=None):
             filename = filedialog.askopenfilename()
             filepath_label.config(text = filename)
+
+            #tells the backend the path to the input file 
+            #returns a list of predictions (real/fake) in the following order 
+            #[model1, model2, model3, model4, model5, most_frequent_prediction_out_of_all_5_models]
+            pred_list = bck.get_list_of_predictions(filename)
+            #print(pred_list)
         
         #file upload
+        #Once the upload file button is pressed, call backend function 
         upload_file = ttk.Button(self, text='File Upload', command=upload_action)
         upload_file.grid(column=1, row=1, sticky=tk.W, padx=5, pady=5)
         
@@ -55,3 +66,5 @@ class App(tk.Tk):
 if __name__ == "__main__":
     app = App()
     app.mainloop()
+
+
