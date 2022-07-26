@@ -1,4 +1,5 @@
 import back as bck
+import hashTest as ht
 from tkinter import *
 import matplotlib.pyplot as plt
 import cv2
@@ -72,7 +73,11 @@ class App(tk.Tk):
             #[model1, model2, model3, model4, model5, most_frequent_prediction_out_of_all_5_models]
             pred_list = bck.get_list_of_predictions(filename)
             predObj.set_model_pred(pred_list)
-            #print(predObj._model1)
+
+            #Hash the file 
+            #hash_val = ht.hashFunc(filename)
+            #ht.writeHashToCsv(hash_val)
+            ht.hashAndWriteToCSV(filename, pred_list)
         
         #file upload
         upload_file = ttk.Button(self, text='File Upload', command=upload_action)
