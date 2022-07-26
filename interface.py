@@ -62,14 +62,15 @@ class App(tk.Tk):
         filepath_label.pack(side = LEFT)
         
         def submitFile(event=None):
-            filepath_label
+            file_upload_master.grid_remove()
+            submit_file.grid_remove()        
+            
+        #model outputs
+        model1_label = tk.Label(self, text = "Model Result: ")
         
         #submit button
         submit_file = tk.Button(self, text="Submit", command=submitFile, borderwidth=1, relief="solid", bg='white')
-        
-        #model output
-        model1_label = tk.Label(self, text = "Model Result: ")
-        
+
         #title font
         title_font = ("Oswald", 20)
         title_label.configure(font = title_font)
