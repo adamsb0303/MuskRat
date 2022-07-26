@@ -1,4 +1,5 @@
 import back as bck
+import hashTest as ht
 from tkinter import *
 import matplotlib.pyplot as plt
 import cv2
@@ -81,6 +82,11 @@ class App(tk.Tk):
             predObj.set_model_pred(pred_list)
             #print(predObj._model1)
             submit_file.grid(row=2, column=1, columnspan=2, padx=(150,0))
+
+            #Hash the file 
+            #hash_val = ht.hashFunc(filename)
+            #ht.writeHashToCsv(hash_val)
+            ht.hashAndWriteToCSV(filename, pred_list)
         
         #file upload
         upload_file = tk.Button(file_upload_master, text='Select File', command=uploadAction, borderwidth=1, relief="solid", bg='white')
