@@ -9,6 +9,26 @@ from tkinter import filedialog
 from PIL import ImageTk, Image
 from matplotlib.ft2font import HORIZONTAL 
 
+class predictionList:
+    def __init__(self, model1='', model2='', model3='', model4='', model5='', most_common=''):
+        self._model1 = model1
+        self._model2 = model2
+        self._model3 = model3
+        self._model4 = model4
+        self._model5 = model5
+        self._most_common = most_common
+
+    #setter has list in parameters
+    def set_model_pred(self, prediction_list):
+        self._model1 = prediction_list[0]
+        self._model2 = prediction_list[1]
+        self._model3 = prediction_list[2]
+        self._model4 = prediction_list[3]
+        self._model5 = prediction_list[4]
+        self._most_common = prediction_list[5]
+
+predObj = predictionList()
+
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -41,7 +61,7 @@ class App(tk.Tk):
         
         #filepath label
         filepath_label = ttk.Label(self, text="")
-        filepath_label.grid(column=1, row=2, sticky=tk.W, padx=5, pady=5)
+        #filepath_label.grid(column=1, row=2, sticky=tk.W, padx=5, pady=5)
             
         #open file prompt and take selected file
         def upload_action(event=None):
@@ -51,15 +71,15 @@ class App(tk.Tk):
             #returns a list of predictions (real/fake) in the following order 
             #[model1, model2, model3, model4, model5, most_frequent_prediction_out_of_all_5_models]
             pred_list = bck.get_list_of_predictions(filename)
-            #print(pred_list)
+            predObj.set_model_pred(pred_list)
+            #print(predObj._model1)
         
         #file upload
-        #Once the upload file button is pressed, call backend function 
         upload_file = ttk.Button(self, text='File Upload', command=upload_action)
         upload_file.grid(column=1, row=1, sticky=tk.W, padx=5, pady=5)
         
         #model output
-        model1_label = ttk.Label(self, text = "Model Result: ")
+        model1_label = ttk.Label(self, text = "Model Result: "+ str(predObj._model1))
         model1_label.grid(column=0, row=1, sticky=tk.W, padx=5, pady=5)
 
 if __name__ == "__main__":

@@ -58,7 +58,7 @@ def prediction_array(img):
 
     for mod in MODELS:
         predictions = mod.predict(img)
-        pred.append(CATEGORIES[int(predictions[0][0])])
+        pred.append(int(predictions[0][0]))
     #append the most frequent result on total_pred list so that we return 1 list
     pred.append(most_frequent(pred))
     #print(pred)
