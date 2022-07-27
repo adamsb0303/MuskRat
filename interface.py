@@ -10,6 +10,8 @@ from tkinter import filedialog
 from PIL import ImageTk, Image
 from matplotlib.ft2font import HORIZONTAL 
 
+CATEGORIES = ['real_image', 'fake_image']
+
 class file_path:
     def __init__(self, filepath=''):
         self._filepath = filepath
@@ -111,12 +113,12 @@ class App(tk.Tk):
             pred_list = bck.get_list_of_predictions(filename)
             predObj.set_model_pred(pred_list) 
             ht.hashAndWriteToCSV(filename, pred_list)     
-            #print(predObj._model1)  
-            #print(predObj._model2)  
-            #print(predObj._model3)  
-            #print(predObj._model4)  
-            #print(predObj._model5)  
-            #print(predObj._most_common)  
+            print(CATEGORIES[predObj._model1])  
+            print(CATEGORIES[predObj._model2])  
+            print(CATEGORIES[predObj._model3])  
+            print(CATEGORIES[predObj._model4])  
+            print(CATEGORIES[predObj._model5])  
+            print(CATEGORIES[predObj._most_common])  
             
         #model outputs
         model1_label = tk.Label(self, text = "Model Result: ")
