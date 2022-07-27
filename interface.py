@@ -1,3 +1,4 @@
+from turtle import width
 import back as bck
 import hashTest as ht
 from tkinter import *
@@ -51,48 +52,49 @@ class App(tk.Tk):
         self.configure(background='white')
 
         # configure grid
-        self.rowconfigure(0)
-        self.rowconfigure(1)
-        self.rowconfigure(2)
-        self.rowconfigure(3)
-        self.rowconfigure(4)
+        self.rowconfigure(0, minsize=240)
+        self.rowconfigure(1, minsize=90)
+        self.rowconfigure(2, minsize=90)
+        self.rowconfigure(3, minsize=90)
+        self.rowconfigure(4, minsize=90)
+        
+        self.columnconfigure(0, minsize=360)
+        self.columnconfigure(1, minsize=120)
+        self.columnconfigure(2, minsize=120)
+        self.columnconfigure(3, minsize=120)
+        self.columnconfigure(4, minsize=240)
 
         self.create_widgets()
 
     def create_widgets(self):
-        #logo image
-        logo_image = Image.open("img\muskrat_logo_transparent.png")
-        logo_resize = logo_image.resize((240,150))
-        logo_final = ImageTk.PhotoImage(logo_resize)
-        logo_label = tk.Label(image=logo_final)
-        logo_label.Image = logo_final
-        logo_label.config(background='white')
+        #title font
+        title_font = ("Oswald", 20)
         
-        logo_label.grid(column=0, row=0, columnspan=2, sticky= tk.E, padx=(240,0), pady=40)
+        #logo image
+        logo_label = self.setImage("img\muskrat_logo_transparent.png", 240, 150)
+        logo_label.grid(column=0, row=0, columnspan=2, sticky= tk.E, padx=(240,0))
         
         #app title
-        title_label = tk.Label(self, text = "MUSKRAT\nDeepfake Detection")
-        title_label.configure(background='white')
-        title_label.grid(column=2, row=0, columnspan=3, sticky=tk.W, pady = 40)
+        title_label = tk.Label(self, text = "MUSKRAT\nDeepfake Detection", background='white', font=title_font)
+        title_label.grid(column=2, row=0, columnspan=3, sticky=tk.W)
         
         #file upload section
         file_upload_master = tk.Frame(self, width=420, height=40, borderwidth=1, relief="solid", bg='white')
         file_upload_master.pack_propagate(False)
-        file_upload_master.grid(column=0, row=1, columnspan=5,padx=(260,0), pady=(0,20))
+        file_upload_master.grid(column=0, row=1, columnspan=5, sticky=tk.N)
             
-        #open file prompt and take selected file
+        #open file prompt and take selected filepath and previews the selected image
         def uploadAction(event=None):
             filename = filedialog.askopenfilename()
             if(filename == ''):
                 return
             filepath_label.config(text = filename)
-            print(filename)
             fpObj.set_filepath(filename)
-            print(fpObj._filepath)
-            #file_path.set_filepath(filename)
-            #print(file_path._filepath)
-            submit_file.grid(row=2, column=1, columnspan=2, padx=(150,0))
-            #file_path.set_filepath(filename)
+            submit_file.grid(row=1, column=0, columnspan=5, pady=(45,0))
+            
+            global image_preview
+            image_preview = self.setImage(filename, 180,180)
+            image_preview.grid(row=2, column=0, columnspan=5, sticky=tk.N)
         
         #file upload
         upload_file = tk.Button(file_upload_master, text='Select File', command=uploadAction, borderwidth=1, relief="solid", bg='white')
@@ -103,32 +105,83 @@ class App(tk.Tk):
         filepath_label.configure(background='white')
         filepath_label.pack(side = LEFT)
         
+        #preview image
+        image_preview = self.setImage("img\muskrat_logo_transparent.png", 240, 150)
+        
         def submitFile(event=None):
-            #filename = file_path._filepath
-            #print(filename)
-            #file_upload_master.grid_remove()
-            #submit_file.grid_remove() 
             filename = fpObj._filepath 
 
             pred_list = bck.get_list_of_predictions(filename)
             predObj.set_model_pred(pred_list) 
             ht.hashAndWriteToCSV(filename, pred_list)     
-            print(CATEGORIES[predObj._model1])  
-            print(CATEGORIES[predObj._model2])  
-            print(CATEGORIES[predObj._model3])  
-            print(CATEGORIES[predObj._model4])  
-            print(CATEGORIES[predObj._model5])  
-            print(CATEGORIES[predObj._most_common])  
+            
+            global image_preview
+            image_preview.grid_remove()
+            image_preview.grid(row=2, column=0, columnspan=1, sticky=tk.NE)
+            
+            output_master.grid(row=2,column=1, columnspan=4, rowspan=3, padx=(80,0), pady=(2,0), sticky=tk.NW)
+            
+            model1_answer_label.configure(text = CATEGORIES[predObj._model1])
+            model2_answer_label.configure(text = CATEGORIES[predObj._model2])
+            model3_answer_label.configure(text = CATEGORIES[predObj._model3])
+            model4_answer_label.configure(text = CATEGORIES[predObj._model4])
+            modelV_answer_label.configure(text = CATEGORIES[predObj._most_common])
             
         #model outputs
-        model1_label = tk.Label(self, text = "Model Result: ")
+        output_master = tk.Frame(self, width=420, height=180, borderwidth=1, relief='solid', bg='white')
+        output_master.pack_propagate(False)
+        
+        output_master.rowconfigure(0, minsize=45)
+        output_master.rowconfigure(1, minsize=45)
+        output_master.rowconfigure(2, minsize=90)
+        
+        output_master.columnconfigure(0, minsize=105)
+        output_master.columnconfigure(1, minsize=105)
+        output_master.columnconfigure(2, minsize=105)
+        output_master.columnconfigure(3, minsize=105)
+        
+        #model 1 results
+        model1_result_label = tk.Label(output_master, text="Model 1", bg='white')
+        model1_result_label.grid(row=0, column=0)
+        model1_answer_label = tk.Label(output_master, text="yes", bg='white')
+        model1_answer_label.grid(row=0, column=1)
+        
+        #model 2 results
+        model2_result_label = tk.Label(output_master, text="Model 2", bg='white')
+        model2_result_label.grid(row=1, column=0)
+        model2_answer_label = tk.Label(output_master, text="yes", bg='white')
+        model2_answer_label.grid(row=1, column=1)
+        
+        #model 3 results
+        model3_result_label = tk.Label(output_master, text="Model 3", bg='white')
+        model3_result_label.grid(row=0, column=2)
+        model3_answer_label = tk.Label(output_master, text="yes", bg='white')
+        model3_answer_label.grid(row=0, column=3)
+        
+        #model 4 results
+        model4_result_label = tk.Label(output_master, text="Model 4", bg='white')
+        model4_result_label.grid(row=1, column=2)
+        model4_answer_label = tk.Label(output_master, text="yes", bg='white')
+        model4_answer_label.grid(row=1, column=3)
+        
+        #verdict results
+        modelV_result_label = tk.Label(output_master, text="Verdict", bg='white')
+        modelV_result_label.grid(row=2, column=2, sticky=tk.N)
+        modelV_answer_label = tk.Label(output_master, text="yes", bg='white')
+        modelV_answer_label.grid(row=2, column=2)
         
         #submit button
         submit_file = tk.Button(self, text="Submit", command=submitFile, borderwidth=1, relief="solid", bg='white')
-
-        #title font
-        title_font = ("Oswald", 20)
-        title_label.configure(font = title_font)
+        
+    #returns image as useable label
+    def setImage(self, filepath, height, width):
+        logo_image = Image.open(filepath)
+        logo_resize = logo_image.resize((height,width))
+        logo_final = ImageTk.PhotoImage(logo_resize)
+        logo_label = tk.Label(image=logo_final)
+        logo_label.Image = logo_final
+        logo_label.config(background='white')
+        return logo_label
 
 if __name__ == "__main__":
     app = App()
