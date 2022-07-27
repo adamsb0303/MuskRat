@@ -10,6 +10,16 @@ from tkinter import filedialog
 from PIL import ImageTk, Image
 from matplotlib.ft2font import HORIZONTAL 
 
+CATEGORIES = ['real_image', 'fake_image']
+
+class file_path:
+    def __init__(self, filepath=''):
+        self._filepath = filepath
+
+    #setter has list in parameters
+    def set_filepath(self, fp):
+        self._filepath = fp
+
 class predictionList:
     def __init__(self, model1='', model2='', model3='', model4='', model5='', most_common=''):
         self._model1 = model1
@@ -29,6 +39,7 @@ class predictionList:
         self._most_common = prediction_list[5]
 
 predObj = predictionList()
+fpObj = file_path()
 
 class App(tk.Tk):
     def __init__(self):
@@ -75,18 +86,13 @@ class App(tk.Tk):
             if(filename == ''):
                 return
             filepath_label.config(text = filename)
-            #tells the backend the path to the input file 
-            #returns a list of predictions (real/fake) in the following order 
-            #[model1, model2, model3, model4, model5, most_frequent_prediction_out_of_all_5_models]
-            pred_list = bck.get_list_of_predictions(filename)
-            predObj.set_model_pred(pred_list)
-            #print(predObj._model1)
+            print(filename)
+            fpObj.set_filepath(filename)
+            print(fpObj._filepath)
+            #file_path.set_filepath(filename)
+            #print(file_path._filepath)
             submit_file.grid(row=2, column=1, columnspan=2, padx=(150,0))
-
-            #Hash the file 
-            #hash_val = ht.hashFunc(filename)
-            #ht.writeHashToCsv(hash_val)
-            ht.hashAndWriteToCSV(filename, pred_list)
+            #file_path.set_filepath(filename)
         
         #file upload
         upload_file = tk.Button(file_upload_master, text='Select File', command=uploadAction, borderwidth=1, relief="solid", bg='white')
@@ -98,8 +104,21 @@ class App(tk.Tk):
         filepath_label.pack(side = LEFT)
         
         def submitFile(event=None):
-            file_upload_master.grid_remove()
-            submit_file.grid_remove()        
+            #filename = file_path._filepath
+            #print(filename)
+            #file_upload_master.grid_remove()
+            #submit_file.grid_remove() 
+            filename = fpObj._filepath 
+
+            pred_list = bck.get_list_of_predictions(filename)
+            predObj.set_model_pred(pred_list) 
+            ht.hashAndWriteToCSV(filename, pred_list)     
+            print(CATEGORIES[predObj._model1])  
+            print(CATEGORIES[predObj._model2])  
+            print(CATEGORIES[predObj._model3])  
+            print(CATEGORIES[predObj._model4])  
+            print(CATEGORIES[predObj._model5])  
+            print(CATEGORIES[predObj._most_common])  
             
         #model outputs
         model1_label = tk.Label(self, text = "Model Result: ")
@@ -114,5 +133,3 @@ class App(tk.Tk):
 if __name__ == "__main__":
     app = App()
     app.mainloop()
-
-
