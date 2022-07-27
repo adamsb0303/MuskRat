@@ -125,15 +125,17 @@ class App(tk.Tk):
             model2_answer_label.configure(text = CATEGORIES[predObj._model2])
             model3_answer_label.configure(text = CATEGORIES[predObj._model3])
             model4_answer_label.configure(text = CATEGORIES[predObj._model4])
+            model5_answer_label.configure(text = CATEGORIES[predObj._model5])
             modelV_answer_label.configure(text = CATEGORIES[predObj._most_common])
             
         #model outputs
         output_master = tk.Frame(self, width=420, height=180, borderwidth=1, relief='solid', bg='white')
         output_master.pack_propagate(False)
         
-        output_master.rowconfigure(0, minsize=45)
-        output_master.rowconfigure(1, minsize=45)
-        output_master.rowconfigure(2, minsize=90)
+        output_master.rowconfigure(0, minsize=30)
+        output_master.rowconfigure(1, minsize=30)
+        output_master.rowconfigure(2, minsize=30)
+        output_master.rowconfigure(3, minsize=90)
         
         output_master.columnconfigure(0, minsize=105)
         output_master.columnconfigure(1, minsize=105)
@@ -164,11 +166,17 @@ class App(tk.Tk):
         model4_answer_label = tk.Label(output_master, text="yes", bg='white')
         model4_answer_label.grid(row=1, column=3)
         
+        #model 5 results
+        model5_result_label = tk.Label(output_master, text="Model 5", bg='white')
+        model5_result_label.grid(row=2, column=0, columnspan=2, sticky=tk.E, padx=(0,20))
+        model5_answer_label = tk.Label(output_master, text="yes", bg='white')
+        model5_answer_label.grid(row=2, column=2, columnspan=2, sticky=tk.W, padx=(30,0))
+        
         #verdict results
         modelV_result_label = tk.Label(output_master, text="Verdict", bg='white')
-        modelV_result_label.grid(row=2, column=2, sticky=tk.N)
+        modelV_result_label.grid(row=3, column=2, sticky=tk.N, pady=(10,0))
         modelV_answer_label = tk.Label(output_master, text="yes", bg='white')
-        modelV_answer_label.grid(row=2, column=2)
+        modelV_answer_label.grid(row=3, column=2)
         
         #submit button
         submit_file = tk.Button(self, text="Submit", command=submitFile, borderwidth=1, relief="solid", bg='white')
