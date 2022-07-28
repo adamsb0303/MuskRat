@@ -122,6 +122,7 @@ class App(tk.Tk):
             
             global image_preview
             image_preview.grid_remove()
+            image_preview = self.setImage("cam.jpg", 180, 180)
             image_preview.grid(row=2, column=0, columnspan=1, sticky=tk.NE)
             
             output_master.grid(row=2,column=1, columnspan=4, rowspan=3, padx=(80,0), pady=(2,0), sticky=tk.NW)
