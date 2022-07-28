@@ -132,6 +132,7 @@ class App(tk.Tk):
             model3_answer_label.configure(text = CATEGORIES[predObj._model3])
             model4_answer_label.configure(text = CATEGORIES[predObj._model4])
             model5_answer_label.configure(text = CATEGORIES[predObj._model5])
+            #model6_answer_label.configure(text = CATEGORIES[predObj._model6])
             modelV_answer_label.configure(text = CATEGORIES[predObj._most_common])
             
         #model outputs
@@ -174,9 +175,15 @@ class App(tk.Tk):
         
         #model 5 results
         model5_result_label = tk.Label(output_master, text="Model 5", bg='white')
-        model5_result_label.grid(row=2, column=0, columnspan=2, sticky=tk.E, padx=(0,20))
+        model5_result_label.grid(row=2, column=0)
         model5_answer_label = tk.Label(output_master, text="yes", bg='white')
-        model5_answer_label.grid(row=2, column=2, columnspan=2, sticky=tk.W, padx=(30,0))
+        model5_answer_label.grid(row=2, column=1)
+        
+        #model 6 results
+        model6_result_label = tk.Label(output_master, text="Model 6", bg='white')
+        model6_result_label.grid(row=2, column=2)
+        model6_answer_label = tk.Label(output_master, text="yes", bg='white')
+        model6_answer_label.grid(row=2, column=3)
         
         #verdict results
         modelV_result_label = tk.Label(output_master, text="Verdict", bg='white')
