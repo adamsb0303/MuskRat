@@ -4,6 +4,7 @@ import hashTest as ht
 from tkinter import *
 import matplotlib.pyplot as plt
 import cv2
+import heatmap as hm
 
 import tkinter as tk
 from tkinter import LEFT, ttk
@@ -113,7 +114,11 @@ class App(tk.Tk):
 
             pred_list = bck.get_list_of_predictions(filename)
             predObj.set_model_pred(pred_list) 
-            ht.hashAndWriteToCSV(filename, pred_list)     
+            #After, HASH_DATABASE.csv generated with hash and model values 
+            ht.hashAndWriteToCSV(filename, pred_list)   
+
+            #after cam.jpg will contain input image with heatmap imposed 
+            hm.heat_map_step_two(filename)  
             
             global image_preview
             image_preview.grid_remove()
