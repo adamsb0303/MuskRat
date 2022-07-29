@@ -83,6 +83,8 @@ class App(tk.Tk):
         file_upload_master = tk.Frame(self, width=420, height=40, borderwidth=1, relief="solid", bg='white')
         file_upload_master.pack_propagate(False)
         file_upload_master.grid(column=0, row=1, columnspan=5, sticky=tk.N)
+        
+        image_preview = self.setImage("img\muskrat_logo_transparent.png", 240, 150)
             
         #open file prompt and take selected filepath and previews the selected image
         def uploadAction(event=None):
@@ -93,7 +95,10 @@ class App(tk.Tk):
             fpObj.set_filepath(filename)
             submit_file.grid(row=1, column=0, columnspan=5, pady=(45,0))
             
-            global image_preview
+            nonlocal image_preview
+            
+            image_preview.grid_remove()
+            output_master.grid_remove()
             image_preview = self.setImage(filename, 180,180)
             image_preview.grid(row=2, column=0, columnspan=5, sticky=tk.N)
         
@@ -106,9 +111,6 @@ class App(tk.Tk):
         filepath_label.configure(background='white')
         filepath_label.pack(side = LEFT)
         
-        #preview image
-        image_preview = self.setImage("img\muskrat_logo_transparent.png", 240, 150)
-        
         def submitFile(event=None):
             filename = fpObj._filepath 
 
@@ -120,7 +122,8 @@ class App(tk.Tk):
             #after cam.jpg will contain input image with heatmap imposed 
             hm.heat_map_step_two(filename)  
             
-            global image_preview
+            nonlocal image_preview
+            
             image_preview.grid_remove()
             image_preview = self.setImage("cam.jpg", 180, 180)
             image_preview.grid(row=2, column=0, columnspan=1, sticky=tk.NE)
