@@ -71,6 +71,9 @@ class App(tk.Tk):
         #title font
         title_font = ("Oswald", 20)
         
+        #general font
+        general_font = ("Noto Sans", 10)
+        
         #logo image
         logo_label = self.setImage("img\muskrat_logo_transparent.png", 240, 150)
         logo_label.grid(column=0, row=0, columnspan=2, sticky= tk.E, padx=(240,0))
@@ -103,11 +106,11 @@ class App(tk.Tk):
             image_preview.grid(row=2, column=0, columnspan=5, sticky=tk.N)
         
         #file upload
-        upload_file = tk.Button(file_upload_master, text='Select File', command=uploadAction, borderwidth=1, relief="solid", bg='white')
+        upload_file = tk.Button(file_upload_master, text='Select File', command=uploadAction, borderwidth=1, relief="solid", bg='white', font=general_font)
         upload_file.pack(side = LEFT, padx=5)
         
         #filepath label
-        filepath_label = tk.Label(file_upload_master, text="No file selected")
+        filepath_label = tk.Label(file_upload_master, text="No file selected", font=general_font)
         filepath_label.configure(background='white')
         filepath_label.pack(side = LEFT)
         
@@ -153,49 +156,49 @@ class App(tk.Tk):
         output_master.columnconfigure(3, minsize=105)
         
         #model 1 results
-        model1_result_label = tk.Label(output_master, text="Model 1", bg='white')
+        model1_result_label = tk.Label(output_master, text="Model 1", bg='white', font=general_font)
         model1_result_label.grid(row=0, column=0)
-        model1_answer_label = tk.Label(output_master, text="yes", bg='white')
+        model1_answer_label = tk.Label(output_master, text="yes", bg='white', font=general_font)
         model1_answer_label.grid(row=0, column=1)
         
         #model 2 results
-        model2_result_label = tk.Label(output_master, text="Model 2", bg='white')
+        model2_result_label = tk.Label(output_master, text="Model 2", bg='white', font=general_font)
         model2_result_label.grid(row=1, column=0)
-        model2_answer_label = tk.Label(output_master, text="yes", bg='white')
+        model2_answer_label = tk.Label(output_master, text="yes", bg='white', font=general_font)
         model2_answer_label.grid(row=1, column=1)
         
         #model 3 results
-        model3_result_label = tk.Label(output_master, text="Model 3", bg='white')
+        model3_result_label = tk.Label(output_master, text="Model 3", bg='white', font=general_font)
         model3_result_label.grid(row=0, column=2)
-        model3_answer_label = tk.Label(output_master, text="yes", bg='white')
+        model3_answer_label = tk.Label(output_master, text="yes", bg='white', font=general_font)
         model3_answer_label.grid(row=0, column=3)
         
         #model 4 results
-        model4_result_label = tk.Label(output_master, text="Model 4", bg='white')
+        model4_result_label = tk.Label(output_master, text="Model 4", bg='white', font=general_font)
         model4_result_label.grid(row=1, column=2)
-        model4_answer_label = tk.Label(output_master, text="yes", bg='white')
+        model4_answer_label = tk.Label(output_master, text="yes", bg='white', font=general_font)
         model4_answer_label.grid(row=1, column=3)
         
         #model 5 results
-        model5_result_label = tk.Label(output_master, text="Model 5", bg='white')
+        model5_result_label = tk.Label(output_master, text="Model 5", bg='white', font=general_font)
         model5_result_label.grid(row=2, column=0)
-        model5_answer_label = tk.Label(output_master, text="yes", bg='white')
+        model5_answer_label = tk.Label(output_master, text="yes", bg='white', font=general_font)
         model5_answer_label.grid(row=2, column=1)
         
         #model 6 results
-        model6_result_label = tk.Label(output_master, text="Model 6", bg='white')
+        model6_result_label = tk.Label(output_master, text="Model 6", bg='white', font=general_font)
         model6_result_label.grid(row=2, column=2)
-        model6_answer_label = tk.Label(output_master, text="yes", bg='white')
+        model6_answer_label = tk.Label(output_master, text="yes", bg='white', font=general_font)
         model6_answer_label.grid(row=2, column=3)
         
         #verdict results
-        modelV_result_label = tk.Label(output_master, text="Verdict", bg='white')
+        modelV_result_label = tk.Label(output_master, text="Verdict", bg='white', font=general_font)
         modelV_result_label.grid(row=3, column=2, sticky=tk.N, pady=(10,0))
-        modelV_answer_label = tk.Label(output_master, text="yes", bg='white')
+        modelV_answer_label = tk.Label(output_master, text="yes", bg='white', font=general_font)
         modelV_answer_label.grid(row=3, column=2)
         
         #submit button
-        submit_file = tk.Button(self, text="Submit", command=submitFile, borderwidth=1, relief="solid", bg='white')
+        submit_file = tk.Button(self, text="Submit", command=submitFile, borderwidth=1, relief="solid", bg='white', font=general_font)
         
     #returns image as useable label
     def setImage(self, filepath, height, width):
